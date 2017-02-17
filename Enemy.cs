@@ -220,44 +220,7 @@ namespace WheelOfTime.Components
                     this.sprite.LockToMap();
 
                 }
-               /* else if (this.attack == true)
-                {
-                    this.sprite.velocity.X = 0;
-                    this.sprite.velocity.Y = 0;
-                    if (this.sprite.heading == 0)
-                    {
-                        this.sprite.CurrentAnimation = AnimationKey.Right;
-                    }
-                    else if (this.sprite.heading == 90)
-                    {
-                        this.sprite.CurrentAnimation = AnimationKey.Up;
-                    }
-                    else if (this.sprite.heading == 180)
-                    {
-                        this.sprite.CurrentAnimation = AnimationKey.Left;
-                    }
-                    else if( this.sprite.heading == 270 )
-                    {
-                        this.sprite.CurrentAnimation = AnimationKey.Down;
-                    }
 
-                    this.sprite.IsAnimating = true;
-
-                    // count to cycle through animation
-                   if ((this.index > 7))
-                    {
-
-                        this.attack = false;
-                        this.index = 0;
-                        
-                    }
-                   this.sprite.LockToMap();
-                   this.sprite.velocity.Normalize();
-                    this.sprite.Position += this.sprite.velocity * this.sprite.Speed;
-                    this.index++;
-
-                }
-                */
                else
                 {
                     this.sprite.IsAnimating = false;
