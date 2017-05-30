@@ -150,26 +150,14 @@ namespace WheelOfTime.Components
                 this.diff.X = distanceX;
                 this.diff.Y = distanceY;
                 this.PosDiff = target.Position - this.sprite.Position;
-               // this.sprite.relativeVel = this.target.velocity - this.sprite.velocity;
-               // this.sprite.timeToClose = this.diff / (this.sprite.relativeVel);
-                //this.t = this.Position.Y - this.target.Position.Y;
+
                 this.desiredHeading = -Math.Atan2(this.PosDiff.Y, this.PosDiff.X);
                 this.temp = this.desiredHeading * 180 / Math.PI;
-                
-               /* if (diff.Length() < (this.range / 2))
-                {
-                    this.attack = true;
-                    this.sprite.Change(this.spriteSheetAttack, this.animationsA, this.sprite.animations);
-                    this.sprite.velocity.X = 0;
-                    this.sprite.velocity.Y = 0;
-                }*/
-                //else
-                //{
-                    this.attack = false;
-                    this.sprite.Change(this.spriteSheet, this.animationsW, this.sprite.animations);
-                    this.sprite.velocity.X = (float)(1 * Math.Cos(this.desiredHeading));
-                    this.sprite.velocity.Y = (float)(1 * Math.Sin(this.desiredHeading));
-                //}
+
+                this.attack = false;
+                this.sprite.Change(this.spriteSheet, this.animationsW, this.sprite.animations);
+                this.sprite.velocity.X = (float)(1 * Math.Cos(this.desiredHeading));
+                this.sprite.velocity.Y = (float)(1 * Math.Sin(this.desiredHeading));
 
                 if (this.temp > 315 && this.temp <= 45)
                     {
@@ -183,12 +171,12 @@ namespace WheelOfTime.Components
                 else if (this.temp > 135 && this.temp <= 225)
                     {
                         this.sprite.heading = 180;
-                       // this.sprite.velocity.X = -1;
+                      
                     }
                 else if (this.temp > 225 && this.temp <= 315)
                     {
                         this.sprite.heading = 270;
-                        //this.sprite.velocity.Y = 1;
+                        
                     }
 
                 if (this.sprite.velocity != Vector2.Zero )
