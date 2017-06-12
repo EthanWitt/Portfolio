@@ -16,6 +16,7 @@ namespace WheelOfTime.Components
 {
     class Projectiles
     {
+        // initialization
         int Speed;
         String name;
         Texture2D SpriteSheet, ArrowSheet;
@@ -45,6 +46,7 @@ namespace WheelOfTime.Components
 
 
         }
+        // constructor
         public Projectiles( Texture2D ProjectileTexture, double desiredHeading,  Vector2 StartPos, String CharacterName)
         {
             this.Speed = 6;
@@ -52,13 +54,13 @@ namespace WheelOfTime.Components
             this.heading = desiredHeading;
             this.velocity.X = (float)(1 * Math.Cos(heading * Math.PI/ 180 ));
             this.velocity.Y = (float)(1 * Math.Sin(heading *- Math.PI/ 180 ));
-            //this.targetPos = Target;
             this.animations = new Dictionary<AnimationKey, Animation>();
             this.Explosion_animations = new Dictionary<AnimationKey, Animation>();
             this.start = StartPos;
 
 
         }
+        // constructor
         public Projectiles(String CharacterName, Texture2D ProjectileTexture, double desiredHeading, Vector2 Target, Vector2 StartPos, AnimatedSprite ArrowTarget)
         {
              this.Speed = 6;
@@ -73,19 +75,7 @@ namespace WheelOfTime.Components
              this.ArcheryTarget = ArrowTarget;
  
         }
-       /* public Projectiles(String CharacterName, Texture2D ProjectileTexture, double desiredHeading, Vector2 StartPos)
-        {
-            this.Speed = 6;
-            this.name = CharacterName + "_projectile";
-            this.heading = desiredHeading;
-            this.velocity.X = (float)(1 * Math.Cos(heading));
-            this.velocity.Y = (float)(1 * Math.Sin(heading));
-            this.animations = new Dictionary<AnimationKey, Animation>();
-            this.Explosion_animations = new Dictionary<AnimationKey, Animation>();
-            this.start = StartPos;
-
-
-        }*/
+ 
         #endregion
 
         #region Initialization Region
@@ -95,13 +85,15 @@ namespace WheelOfTime.Components
         #region Method Region
         public void load(Game game)
         {
+            // load sprites
             this.g = game;
             this.SpriteSheet = game.Content.Load<Texture2D>(@"Sprites\fireball");
             this.ArrowSheet = game.Content.Load<Texture2D>(@"Sprites\arrow");
             
             //Loads the fireball animation
-            if (this.name.First() == 'F' || this.name.First() == 'R') //F for Forsaken, R for Rand
+            if (this.name.First() == 'F' || this.name.First() == 'R') //F for Forsaken, R for Rand (main character)
             {
+                // do magic animations
                 Animation animation = new Animation(8, 64, 64, 0, 0);
                 this.animations.Add(AnimationKey.Left, animation);
 
@@ -126,7 +118,7 @@ namespace WheelOfTime.Components
                 animation = new Animation(8, 64, 64, 0, 448);
                 this.animations.Add(AnimationKey.LeftPlusHalf, animation);
 
-
+                // set projectile start orientation and position (fireball)
                 this.sprite = new AnimatedSprite(this.name, SpriteSheet, this.animations);
                 this.sprite.heading = this.heading;
                 this.sprite.velocity = this.velocity;
@@ -134,6 +126,7 @@ namespace WheelOfTime.Components
             }
             else if (this.name.First() == 'A') //A for Aiel Archer
             {
+                // load arrow sprite
                 Animation animation = new Animation(1, 40, 40, 0, 0);
                 this.animations.Add(AnimationKey.Up, animation);
 
@@ -158,7 +151,7 @@ namespace WheelOfTime.Components
                 animation = new Animation(1, 40, 40, 0, 280);
                 this.animations.Add(AnimationKey.RightPlusHalf, animation);
 
-
+                // set projectile start orientation and position (arrow)
                 this.sprite = new AnimatedSprite(this.name, ArrowSheet, this.animations);
                 this.sprite.heading = this.heading;
                 this.sprite.velocity = this.velocity;
@@ -167,11 +160,13 @@ namespace WheelOfTime.Components
 
 
         }
-        // Update
+        
+        // Update 
         public void Update(GameTime gameTime, List<Ally> ArmyOfTheDragon, List<Enemy> ArmyOfTheDarkLord, List<Projectiles> ActiveProjectiles,
                             List<Explosion> ActiveExplosions, Player Rand)
   {
-            if (this.sprite.name.First() == 'A')
+            //if this type is Aiel, set the arrow orienation and target math
+            if (this.sprite.name.First() == 'A') 
             {
                 distanceX = (this.ArcheryTarget.Position.X - this.sprite.Position.X) * (ArcheryTarget.Position.X - this.sprite.Position.X);
                 distanceY = (ArcheryTarget.Position.Y - this.sprite.Position.Y) * (ArcheryTarget.Position.Y - this.sprite.Position.Y);
@@ -181,6 +176,7 @@ namespace WheelOfTime.Components
                 this.sprite.velocity.X = (float)(1 * Math.Cos(this.desiredHeading));
                 this.sprite.velocity.Y = (float)(1 * Math.Sin(this.desiredHeading));
             }
+            // if this type is Forsaken, set the fireball orientation 
             else if (this.sprite.name.First() == 'F')
             {
                 distanceX = (targetPos.X - this.sprite.Position.X) * (targetPos.X - this.sprite.Position.X);
@@ -188,7 +184,7 @@ namespace WheelOfTime.Components
                 heading = this.sprite.heading * -180 / Math.PI;
             }
 
-           
+           // calculate heading to adjust sprite animation
             if (this.heading < 0)
             {
                 this.heading = 360 + this.heading;
@@ -226,24 +222,27 @@ namespace WheelOfTime.Components
             {
                 this.sprite.CurrentAnimation = AnimationKey.DownPlusHalf;
             }
+            
+            // Set fireball and animation for the main character
             if (this.name.First() == 'R')
             {
 
                 this.sprite.velocity.X = this.velocity.X;
                 this.sprite.velocity.Y = this.velocity.Y;
                 this.sprite.isAnimating = true;
-                //this.sprite.velocity.Normalize();
                 this.sprite.Position += this.sprite.velocity * this.Speed;
                 this.sprite.LockToMap();
             }
+            // if Forsaken, calculate the hit (automated based on location proximity) and check health
             else if (this.name.First() == 'F')
             {
                 if ((distanceX + distanceY) <= 100 && this.expl == null)
                 {
                     this.sprite.velocity.X = this.velocity.X = 0;
                     this.sprite.velocity.Y = this.velocity.Y = 0;
-                    //ActiveProjectiles.Remove(this);
                     this.active = false;
+                    
+                //calculate health damage inside a radius of 50, regardless of if friendly or enemy
                     foreach (Enemy s in ArmyOfTheDarkLord)
                     {
                         if ((Math.Abs(s.spriteWalk.Position.X - this.sprite.Position.X) < 50) && Math.Abs(s.spriteWalk.Position.Y - this.sprite.Position.Y) < 50)
@@ -262,6 +261,7 @@ namespace WheelOfTime.Components
                     {
                         Rand.sprite.health -= 30;
                     }
+                 // make the fireball explode, play animation
                     this.expl = new Explosion(this.sprite.name, this.sprite.Position);
                     ActiveExplosions.Add(this.expl);
                     this.expl.load(this.g);
@@ -270,8 +270,11 @@ namespace WheelOfTime.Components
                     this.sprite.isAnimating = false;
                     this.sprite = null;
                 }
+                
+             
                 else if (this.expl != null)
                 {
+                  //set garbage collection after animation finishes
                     if (this.expl.sprite == null || this.expl.sprite.isAnimating == false)
                     {
                         this.expl = null;
@@ -282,27 +285,27 @@ namespace WheelOfTime.Components
 
                 else
                 {
+                // if the projectile is active, lock to map
                     this.sprite.isAnimating = true;
-                    //this.sprite.velocity.Normalize();
                     this.sprite.Position += this.velocity * 8;
                     this.sprite.LockToMap();
                 }
             }
+            
+            //Aiel projectile movement
             else if (this.name.First() == 'A')
             {
+                // calculate hit
                 if ((distanceX + distanceY) <= 500)
                 {
                     this.sprite.velocity.X = this.velocity.X = 0;
                     this.sprite.velocity.Y = this.velocity.Y = 0;
-                    //ActiveProjectiles.Remove(this);
-                    this.active = false;
-                   
+                    this.active = false;                   
                     ArcheryTarget.health -= 20;
-                    
-
                     this.sprite.isAnimating = false;
                     this.sprite = null;
                 }
+                // calculate if projectile goes off screen, delete
                 else if (((this.sprite.Position.X - this.start.X) * (this.sprite.Position.X - this.start.X) + (this.sprite.Position.Y - this.start.Y) * (this.sprite.Position.Y - this.start.Y)) > 30000)
                 {
                     this.sprite.velocity.X = this.velocity.X = 0;
@@ -311,6 +314,7 @@ namespace WheelOfTime.Components
                     this.sprite = null;
                     this.active = false;
                 }
+                // otherwise, the arrow is still active
                 else
                 {
                     this.sprite.isAnimating = true;
@@ -322,6 +326,7 @@ namespace WheelOfTime.Components
             if( this.sprite != null)
             this.sprite.Update(gameTime);
         }
+        
         // Draw
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Game1 GameRef)
         {
@@ -329,6 +334,8 @@ namespace WheelOfTime.Components
             this.sprite.Draw(gameTime, GameRef.SpriteBatch, Player.camera);
         }
         #endregion
+            
+        // deconstruct
         ~Projectiles()
         {
             this.animations = null;
