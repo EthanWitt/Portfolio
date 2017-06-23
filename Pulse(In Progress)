@@ -1,62 +1,94 @@
-//Pseudo-Code------------------------------------------------------------------------------------------------------------------
+//Headers
+#ifndef define player
+#include "player.h"
+#endif // !define player
+#ifndef define weapon
+#include "weapon.h"
+#endif // !define weapon
+#ifndef define string
+#include <string>
+#endif // !define string
+
+
+
+using namespace std;
 
 //Prototypes
-  //double calcPositionPenalty(String);
-  //double calcWeightPenalty(Weapon);
-  
+double calcPositionPenalty(player);
+double calcWeightPenalty(weapon);
+double calcFlutter(int, int, int);
+
+
 
 //Main Function
-  //Inputs
-    //Player
+int main()
+{
+	//Inputs
+	//Player
 
-    //Variables
-    Vector3 AimingDirection;
-    int Pulse;
-    double BreathingPenalty, PulsePenalty, PositionPenalty, weaponWeight;
-    String PlayerFiringPosition;
+	//Variables
+	double AimingDirection;
+	int Pulse;
+	double BreathingPenalty, PulsePenalty, PositionPenalty, weaponWeight;
+	string firingPosition;
 
-    // Retrieve Pulse from Device
-        // try: get(Pulse);
-        // catch: Pulse = 90;
-        // Display current Pulse to HUD
+	// Retrieve Pulse from Device
+	// try: get(Pulse);
+	// catch: Pulse = 90;
+	// Display current Pulse to HUD
 
-    // Retrieve PlayerFiringPosition
-        // PlayerFiringPosition = get(player.FiringPosition);
-        // PositionPenalty = calcPositionPenalty(PlayerFiringPosition);
+	// Retrieve PlayerFiringPosition
+	// PlayerFiringPosition = get(player.FiringPosition);
+	// PositionPenalty = calcPositionPenalty(PlayerFiringPosition);
 
-    // Retrieve WeaponWeight
-        // weaponWeight = player.weapon.weight;
+	// Retrieve WeaponWeight
+	// weaponWeight = player.weapon.weight;
 
-     //When player is looking down the sights:
-        // Use the player's firing position (off-hand, kneeling, prone) to calculate penalties (completed in separate function)
-           // Prone Penalty is 1
-           // Kneeling Penalty is 3
-           // Off-Hand Penalty is 5
-        // Weapon Weight affects accuracy
-        // AimingDirection will have a variation depending on the pulse
-        // Breathing will impact accuracy (completed in separate function)
-            // With no breath held, variation is calculated as 5 
-            // with breath held within 10 sec variation is 1
-            // exceeds 10 sec: variation increases to 3
-        
+	//When player is looking down the sights:
+	// Use the player's firing position (off-hand, kneeling, prone) to calculate penalties (completed in separate function)
+	// Prone Penalty is 1
+	// Kneeling Penalty is 3
+	// Off-Hand Penalty is 5
+	// Weapon Weight affects accuracy
+	// AimingDirection will have a variation depending on the pulse
+	// Breathing will impact accuracy (completed in separate function)
+	// With no breath held, variation is calculated as 5 
+	// with breath held within 10 sec variation is 1
+	// exceeds 10 sec: variation increases to 3
+	return 0;
+}
 //Implementation
 
-    //calcPositionPenalty()
-    //{
-        // Use the player's firing position (off-hand, kneeling, prone) to calculate penalties (completed in separate function)
-        // Prone Penalty is 1
-        // Kneeling Penalty is 3
-        // Off-Hand Penalty is 5
-    //}
-    
-    /*
-    calcFlutter is one way to implement Pulse. In this instance, the reticle for the player is a circle that expands and contracts
-    based on the heart rate and penalties. The heart rate will cause the reticle to expand or contract at different rates and the 
-    penalties will determine the amount of expansion or contraction. The projectile will fire in a random spot in the circle.
-    */
-    //calcFlutter(int heartrate, int posPenalty, int weaponWeightPenalty)
-    //{
-        //Flutter will e utilized as a tick function
-        //expand/contract rate is roughly half of the heartrate
-        //radius of the circle is (penalty+weaponWeightPenalty)/2 [at 100yds]
-    //}
+double calcPositionPenalty(player p)
+{
+// Use the player's firing position (off-hand, kneeling, prone) to calculate penalties (completed in separate function)
+// Prone Penalty is 1
+// Kneeling Penalty is 3
+// Off-Hand Penalty is 5
+	return 0.0;
+}
+
+double calcWeightPenalty(weapon equippedWeapon)
+{
+	//Create a weightPenalty for a range of weapons
+		//light weapons (less than 4lbs)
+			//penalty is .25
+		//medium weapons (4.1-9lbs)
+			//penalty is .5
+		//heavy weapons (9+ lbs)
+			//penalty is 1
+	return 0.0;
+}
+
+/*
+calcFlutter is one way to implement Pulse. In this instance, the reticle for the player is a circle that expands and contracts
+based on the heart rate and penalties. The heart rate will cause the reticle to expand or contract at different rates and the
+penalties will determine the amount of expansion or contraction. The projectile will fire in a random spot in the circle.
+*/
+double calcFlutter(int heartrate, int posPenalty, int weaponWeightPenalty)
+{
+//Flutter will e utilized as a tick function
+//expand/contract rate is roughly half of the heartrate
+//radius of the circle is (penalty+weaponWeightPenalty)/2 [at 100yds]
+	return 0.0;
+}
