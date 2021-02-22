@@ -1,0 +1,42 @@
+//The code below is a snippit from an exercise I was doing. The idea is if there is a magazine article, could you cut words out of it to write a specific note
+
+bool checkNote(vector<string> magazine, vector<string> note)
+{
+    unordered_map<string , int> word;
+    
+    // Do a count in an unordered map of word for instances
+    for (int i; i < magazine.size(); i++)
+    {
+        word[magazine[i]]++;
+    }
+    
+    // Comparre the map to the what the writer wants in the note, if the word is there decrement by 1
+    // if the decrement is zero it means that particular word has been used as many times as it appeared in the magazine
+    for(int i; i<note.size(); i++)
+    {
+        if(word[note[i]]>0)
+        {
+            word[note[i]]--;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Complete the checkMagazine function below.
+void checkMagazine(vector<string> magazine, vector<string> note) 
+{
+ bool result = checkNote(magazine, note);
+ if(result)
+ {
+     std::cout<< "Yes";
+ }
+ else 
+ {
+    std::cout<< "No";
+ }
+    
+}
