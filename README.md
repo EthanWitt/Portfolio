@@ -7,4 +7,8 @@ The "Portfolio.ppt" is a brief highlight of some of the projects I have worked o
 
 The "Projectiles" file is a snippet from a game I wrote in C#. The file is how to fire projectiles in an isometric space and cycles through 2D animations.
 
+"Battleships.cpp" is a portion of a C++ project to play Battleship in a console window.
+
+"Tree.h" is a snippet of a C++ database program I wrote to handle user data.
+
 Also, check out the VHUB repository for examples of some Java code from my team's capstone project and check out our presentation video at: https://www.youtube.com/watch?v=axDyhF1N7hY
