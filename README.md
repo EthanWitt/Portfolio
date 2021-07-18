@@ -11,4 +11,4 @@ The "Projectiles" file is a snippet from a game I wrote in C#. The file is how t
 
 "Tree.h" is a snippet of a C++ database program I wrote to handle user data.
 
-Also, check out the VHUB repository for examples of some Java code from my team's capstone project and check out our presentation video at: https://www.youtube.com/watch?v=axDyhF1N7hY
+Also, check out the VHUD repository for examples of some Java code from my team's capstone project and check out our presentation video at: https://www.youtube.com/watch?v=axDyhF1N7hY
